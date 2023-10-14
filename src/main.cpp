@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "Image.h"
+#include "Image.cpp"
 using namespace std;
 
 int main() {
