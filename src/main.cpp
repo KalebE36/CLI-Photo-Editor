@@ -3,6 +3,9 @@
 
 int main () {
 
+	string in_file;
+
 
 	return 0;
+
 }
