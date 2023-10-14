@@ -4,9 +4,9 @@
 #include <fstream>
 using namespace std;
 
-//(1) Declare a Header struct
+
 struct Header {
-    //(2) Declare each Header element
+
     char id_length;
     char color_mapType;
     char data_typeCode;
