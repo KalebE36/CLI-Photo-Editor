@@ -54,9 +54,9 @@ void Image::multiply(const Image& top_layer, const Image& bottom_layer) {
     for (unsigned int i = 0; i < top_layer.pixels.size(); i++) {
         Pixel new_pixel; 
 
-        new_pixel.blue = (int)((((float)top_layer.pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
-        new_pixel.green = (int)((((float)top_layer.pixels.at(i).green * (float)bottom_layer.pixels.at(i).green) / 255) + 0.5f);
-        new_pixel.red = (int)((((float)top_layer.pixels.at(i).red * (float)bottom_layer.pixels.at(i).red) / 255) + 0.5f);
+        new_pixel.blue = (char)((((float)top_layer.pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
+        new_pixel.green = (char)((((float)top_layer.pixels.at(i).green * (float)bottom_layer.pixels.at(i).green) / 255) + 0.5f);
+        new_pixel.red = (char)((((float)top_layer.pixels.at(i).red * (float)bottom_layer.pixels.at(i).red) / 255) + 0.5f);
         
         pixels.push_back(new_pixel); 
 
