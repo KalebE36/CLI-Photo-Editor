@@ -1,5 +1,11 @@
 #include "Image.h"
 #include <iostream>
+#include <vector>
+
+
+
+
+
 
 
 Image::Image() {}
@@ -43,10 +49,24 @@ void Image::read(const string& in_name) {
   
 }
 
+
+void Image::multiply(const Image& top_layer, const Image& bottom_layer) {
+    for (unsigned int i = 0; i < top_layer.pixels.size(); i++) {
+        Pixel new_pixel; 
+
+        new_pixel.blue = (int)((((float)top_layer.pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
+        new_pixel.green = (int)((((float)top_layer.pixels.at(i).green * (float)bottom_layer.pixels.at(i).green) / 255) + 0.5f);
+        new_pixel.red = (int)((((float)top_layer.pixels.at(i).red * (float)bottom_layer.pixels.at(i).red) / 255) + 0.5f);
+        
+        pixels.push_back(new_pixel); 
+
+    }
+
+}
+
+
 void Image::write(const string& out_name) {
-
     ofstream stream(out_name, ios_base::binary);
-
 
     stream.write(&header.id_length, sizeof(header.id_length));
     stream.write(&header.color_mapType, sizeof(header.color_mapType));
@@ -61,7 +81,9 @@ void Image::write(const string& out_name) {
     stream.write(&header.bits_perPixel, sizeof(header.bits_perPixel) );
     stream.write(&header.image_descriptor, sizeof(header.image_descriptor));
 
-    for (auto pixel : pixels) {
+    for (int i = 0; i < pixels.size(); i++) {
+        Pixel pixel = pixels[i];
+
         stream.write((char*)& pixel.blue, sizeof(pixel.blue));
         stream.write((char*)& pixel.green, sizeof(pixel.green));
         stream.write((char*)& pixel.red, sizeof(pixel.red));
@@ -70,4 +92,8 @@ void Image::write(const string& out_name) {
 
 
 }
+
+
+
+
 
