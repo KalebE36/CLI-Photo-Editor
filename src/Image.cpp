@@ -5,7 +5,25 @@
 
 
 
+void Clamp(int& b, int& g, int& r) {
+    if(b > 255) {
+            b = 255;
+        } else if (b < 0){
+            b = 0; 
+        }
 
+        if(g > 255) {
+            g = 255;
+        } else if (g < 0){
+            g = 0; 
+        }
+
+        if(r > 255) {
+            r = 255;
+        } else if (r < 0){
+            r = 0; 
+        }
+}
 
 
 Image::Image() {}
@@ -51,7 +69,7 @@ void Image::read(const string& in_name) {
 
 
 void Image::multiply(const Image& top_layer, const Image& bottom_layer) {
-    for (unsigned int i = 0; i < top_layer.pixels.size(); i++) {
+    for (int i = 0; i < top_layer.pixels.size(); i++) {
         Pixel new_pixel; 
 
         new_pixel.blue = (char)((((float)top_layer.pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
@@ -63,6 +81,47 @@ void Image::multiply(const Image& top_layer, const Image& bottom_layer) {
     }
 
 }
+
+void Image::subtract(const Image& top_layer, const Image& bottom_layer){
+
+    int blue, green, red;
+    for(int i = 0; i < top_layer.pixels.size(); i++){
+        Pixel new_pixel; 
+
+        blue = (int)top_layer.pixels.at(i).blue - (int)bottom_layer.pixels.at(i).blue; 
+        green = (int)top_layer.pixels.at(i).green - (int)bottom_layer.pixels.at(i).green; 
+        red = (int)top_layer.pixels.at(i).red - (int)bottom_layer.pixels.at(i).red; 
+
+        Clamp(blue, green, red); 
+
+        new_pixel.blue = (char)blue; 
+        new_pixel.green = (char)green;
+        new_pixel.red = (char)red; 
+
+        pixels.push_back(new_pixel); 
+
+    }
+}
+
+
+void Image::screen(const Image& top_layer, const Image& bottom_layer) {
+
+    for (unsigned int i = 0; i < top_layer.pixels.size(); i++) {
+        Pixel new_pixel; 
+        
+        new_pixel.blue = (char)((255 - (((float)(255 - top_layer.pixels.at(i).blue)) * ((float)255 - bottom_layer.pixels.at(i).blue)) / 255) + 0.5f);
+        new_pixel.green = (char)((255 - (((float)(255 - top_layer.pixels.at(i).green)) * ((float)255 - bottom_layer.pixels.at(i).green)) / 255) + 0.5f);
+        new_pixel.red = (char)((255 - (((float)(255 - top_layer.pixels.at(i).red)) * ((float)255 - bottom_layer.pixels.at(i).red)) / 255) + 0.5f);
+
+
+        pixels.push_back(new_pixel);
+        
+    } 
+
+}
+
+
+
 
 
 void Image::write(const string& out_name) {

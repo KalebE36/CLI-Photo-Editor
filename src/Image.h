@@ -37,7 +37,7 @@ public:
 
     };
 
-    
+
     Header header;
     vector<Pixel> pixels;
 
@@ -46,6 +46,8 @@ public:
     void read(const string& in_name);
     void write(const string& out_name); 
     void multiply(const Image& top_layer, const Image& bottom_layer);
+    void subtract(const Image& top_layer, const Image& bottom_layer); 
+    void screen(const Image& top_layer, const Image& bottom_layer); 
 
 };
 
