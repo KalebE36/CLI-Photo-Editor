@@ -125,14 +125,77 @@ void Image::overlay(const Image& top_layer, const Image& bottom_layer) {
 
     for(int i = 0; i <  top_layer.pixels.size(); i++) {
 
-    Pixel new_pixel; 
+        Pixel new_pixel; 
 
-    if((float)(top_layer.pixels.at(i).blue / 255) > 0.5)
+        if((((float)bottom_layer.pixels.at(i).blue )/ 255) > 0.5) {
+            new_pixel.blue = (((1 - (2 * (1 - top_layer.pixels.at(i).blue / 255.0) * (1 - bottom_layer.pixels.at(i).blue / 255.0))) * 255.0) + 0.5f);
+        } else  {
+            new_pixel.blue = (int)(((2 * (top_layer.pixels.at(i).blue / 255.0) * (bottom_layer.pixels.at(i).blue / 255.0)) * 255.0) + 0.5f);
+        }
 
+        if((((float)bottom_layer.pixels.at(i).green ) / 255) > 0.5) {
+            new_pixel.green = (int)(((1 - (2 * (1 - top_layer.pixels.at(i).green / 255.0) * (1 - bottom_layer.pixels.at(i).green / 255.0))) * 255.0) + 0.5f);    
 
+        } else {
+            new_pixel.green = (int)(((2 * (top_layer.pixels.at(i).green / 255.0) * (bottom_layer.pixels.at(i).green / 255.0)) * 255.0) + 0.5f);
+
+        }
+
+        if((((float)bottom_layer.pixels.at(i).red) / 255) > 0.5) {
+            new_pixel.red = (int)(((1 - (2 * (1 - top_layer.pixels.at(i).red / 255.0) * (1 - bottom_layer.pixels.at(i).red / 255.0))) * 255.0) + 0.5f);    
+
+        } else {
+            new_pixel.red = (int)(((2 * (top_layer.pixels.at(i).red / 255.0) * (bottom_layer.pixels.at(i).red / 255.0)) * 255.0) + 0.5f);
+
+        }
+
+        pixels.push_back(new_pixel);
 
 
     }
+}
+
+void Image::add(Image& image, int b, int g, int r) {
+    for(int i = 0; i < image.pixels.size(); i++) {
+        int b1 = b;
+        int g1 = g;
+        int r1 = r;
+        Pixel new_pixel; 
+
+        b1 = (int)image.pixels.at(i).blue + b1; 
+        g1 = (int)image.pixels.at(i).green + g1; 
+        r1 = (int)image.pixels.at(i).red + r1; 
+
+        Clamp(b1, g1, r1); 
+
+        new_pixel.blue = b1; 
+        new_pixel.green = g1; 
+        new_pixel.red = r1; 
+
+        pixels.push_back(new_pixel);
+    } 
+}
+
+void Image::scale(Image& image, int b, int g, int r) {
+    for(int i = 0; i < image.pixels.size(); i++) {
+        Pixel new_pixel; 
+        int b1 = b;
+        int g1 = g;
+        int r1 = r;
+
+        b1 = (int)image.pixels.at(i).blue * b1;
+        g1 = (int)image.pixels.at(i).green * g1; 
+        r1 = (int)image.pixels.at(i).red * r1; 
+
+        Clamp(b1, g1, r1); 
+
+        new_pixel.blue = b1; 
+        new_pixel.green = g1; 
+        new_pixel.red = r1; 
+
+        pixels.push_back(new_pixel); 
+        
+    } 
 }
 
 
