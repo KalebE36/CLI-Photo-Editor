@@ -109,9 +109,9 @@ void Image::screen(const Image& top_layer, const Image& bottom_layer) {
     for (unsigned int i = 0; i < top_layer.pixels.size(); i++) {
         Pixel new_pixel; 
         
-        new_pixel.blue = (char)((255 - (((float)(255 - top_layer.pixels.at(i).blue)) * ((float)255 - bottom_layer.pixels.at(i).blue)) / 255) + 0.5f);
-        new_pixel.green = (char)((255 - (((float)(255 - top_layer.pixels.at(i).green)) * ((float)255 - bottom_layer.pixels.at(i).green)) / 255) + 0.5f);
-        new_pixel.red = (char)((255 - (((float)(255 - top_layer.pixels.at(i).red)) * ((float)255 - bottom_layer.pixels.at(i).red)) / 255) + 0.5f);
+        new_pixel.blue = (char)(((1 - ((1 - top_layer.pixels.at(i).blue / 255.0)*(1 - bottom_layer.pixels.at(i).blue / 255.0)))*255.0) + 0.5f);
+        new_pixel.green = (char)(((1 - ((1 - top_layer.pixels.at(i).green / 255.0)*(1 - bottom_layer.pixels.at(i).green / 255.0)))*255.0) + 0.5f);
+        new_pixel.red = (char)(((1 - ((1 - top_layer.pixels.at(i).red / 255.0)*(1 - bottom_layer.pixels.at(i).red / 255.0)))*255.0) + 0.5f);
 
 
         pixels.push_back(new_pixel);
@@ -119,6 +119,22 @@ void Image::screen(const Image& top_layer, const Image& bottom_layer) {
     } 
 
 }
+
+
+void Image::overlay(const Image& top_layer, const Image& bottom_layer) {
+
+    for(int i = 0; i <  top_layer.pixels.size(); i++) {
+
+    Pixel new_pixel; 
+
+    if((float)(top_layer.pixels.at(i).blue / 255) > 0.5)
+
+
+
+
+    }
+}
+
 
 
 

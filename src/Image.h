@@ -48,6 +48,7 @@ public:
     void multiply(const Image& top_layer, const Image& bottom_layer);
     void subtract(const Image& top_layer, const Image& bottom_layer); 
     void screen(const Image& top_layer, const Image& bottom_layer); 
+    void overlay(const Image& top_layer, const Image& bottom_layer); 
 
 };
 
