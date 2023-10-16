@@ -238,6 +238,38 @@ void Image::seperateChannel(const Image& image, int b, int g, int r){
         }  
     }
 
+}
+
+void Image::combChannel(const Image& blue_channel, const Image& green_channel, const Image& red_channel) {
+    for (int i = 0; i < blue_channel.pixels.size(); i++) {
+        Pixel new_pixel; 
+
+        new_pixel.blue = blue_channel.pixels.at(i).blue;
+        new_pixel.green = green_channel.pixels.at(i).green;
+        new_pixel.red = red_channel.pixels.at(i).red;
+
+        pixels.push_back(new_pixel); 
+
+
+
+        
+    }
+}
+
+void Image::flipImage(const Image& image1) {
+    for (int i = image1.pixels.size()-1; i >= 0; i--) {
+        Pixel new_pixel; 
+
+        new_pixel.blue = image1.pixels.at(i).blue;
+        new_pixel.green = image1.pixels.at(i).green;
+        new_pixel.red = image1.pixels.at(i).red;
+
+
+
+        pixels.push_back(new_pixel); 
+
+
+    }
 
 
 }

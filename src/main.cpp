@@ -10,11 +10,10 @@ int main() {
     Image image1;
     Image out_image; 
 
-    image1.read("../input/car.tga");
+    image1.read("../input/text2.tga");
 
     out_image.header = image1.header;
-    out_image.seperateChannel(image1, 0, 1, 0);
-
+    out_image.flipImage(image1);
 
 
     out_image.write("../output/Test.tga");

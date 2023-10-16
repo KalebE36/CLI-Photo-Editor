@@ -52,6 +52,8 @@ public:
     void add(const Image& image, int b, int g, int r);  
     void scale(const Image& image, int b, int g, int r); 
     void seperateChannel(const Image& image, int b, int g, int r); 
+    void combChannel(const Image& blue_channel, const Image& green_channel, const Image& red_channel); 
+    void flipImage(const Image& image1); 
 
 
 };
