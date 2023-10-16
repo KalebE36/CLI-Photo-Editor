@@ -49,8 +49,9 @@ public:
     void subtract(const Image& top_layer, const Image& bottom_layer); 
     void screen(const Image& top_layer, const Image& bottom_layer); 
     void overlay(const Image& top_layer, const Image& bottom_layer);
-    void add(Image& image, int b, int g, int r);  
-    void scale(Image& image, int b, int g, int r); 
+    void add(const Image& image, int b, int g, int r);  
+    void scale(const Image& image, int b, int g, int r); 
+    void seperateChannel(const Image& image, int b, int g, int r); 
 
 
 };

@@ -13,7 +13,7 @@ int main() {
     image1.read("../input/car.tga");
 
     out_image.header = image1.header;
-    out_image.scale(image1, 0, 1, 4);
+    out_image.seperateChannel(image1, 0, 1, 0);
 
 
 

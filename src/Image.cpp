@@ -155,7 +155,7 @@ void Image::overlay(const Image& top_layer, const Image& bottom_layer) {
     }
 }
 
-void Image::add(Image& image, int b, int g, int r) {
+void Image::add(const Image& image, int b, int g, int r) {
     for(int i = 0; i < image.pixels.size(); i++) {
         int b1 = b;
         int g1 = g;
@@ -176,7 +176,7 @@ void Image::add(Image& image, int b, int g, int r) {
     } 
 }
 
-void Image::scale(Image& image, int b, int g, int r) {
+void Image::scale(const Image& image, int b, int g, int r) {
     for(int i = 0; i < image.pixels.size(); i++) {
         Pixel new_pixel; 
         int b1 = b;
@@ -196,6 +196,50 @@ void Image::scale(Image& image, int b, int g, int r) {
         pixels.push_back(new_pixel); 
         
     } 
+}
+
+void Image::seperateChannel(const Image& image, int b, int g, int r){
+    if (b == 1) {
+        for(int i = 0; i < image.pixels.size(); i++) {
+            Pixel new_pixel; 
+
+            new_pixel.blue = image.pixels.at(i).blue; 
+            new_pixel.green = image.pixels.at(i).blue; 
+            new_pixel.red = image.pixels.at(i).blue; 
+
+            pixels.push_back(new_pixel);
+
+        }  
+    }
+
+    if (g == 1){
+        for(int i = 0; i < image.pixels.size(); i++) {
+            Pixel new_pixel; 
+
+            new_pixel.blue = image.pixels.at(i).green; 
+            new_pixel.green = image.pixels.at(i).green; 
+            new_pixel.red = image.pixels.at(i).green; 
+
+            pixels.push_back(new_pixel);
+
+        }  
+    }
+
+    if (r == 1){
+        for(int i = 0; i < image.pixels.size(); i++) {
+            Pixel new_pixel; 
+
+            new_pixel.blue = image.pixels.at(i).red; 
+            new_pixel.green = image.pixels.at(i).red; 
+            new_pixel.red = image.pixels.at(i).red; 
+
+            pixels.push_back(new_pixel);
+
+        }  
+    }
+
+
+
 }
 
 
