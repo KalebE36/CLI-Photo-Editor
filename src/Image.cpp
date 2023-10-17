@@ -199,6 +199,7 @@ void Image::scale(const Image& image, int b, int g, int r) {
 }
 
 void Image::seperateChannel(const Image& image, int b, int g, int r){
+    pixels.clear(); 
     if (b == 1) {
         for(int i = 0; i < image.pixels.size(); i++) {
             Pixel new_pixel; 
