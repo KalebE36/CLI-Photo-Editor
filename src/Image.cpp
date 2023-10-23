@@ -28,14 +28,15 @@ void Clamp(int& b, int& g, int& r) {
 
 Image::Image() {}
 
-void Image::read(const string& in_name) {
+void Image::read(const string& in_name, int& check_num) {
 
     ifstream stream(in_name, ios_base::binary);
 
     if (!stream.is_open()) {
-        cout << "file is not open :(" << endl;
+        cout << "File does not exist." << endl;
+        check_num = 1;
     }
-    
+
 
     stream.read(&header.id_length, sizeof(header.id_length));
     stream.read(&header.color_mapType, sizeof(header.color_mapType));
@@ -163,7 +164,7 @@ void Image::add(const Image& image, int b, int g, int r) {
         Pixel new_pixel; 
 
         b1 = (int)image.pixels.at(i).blue + b1; 
-        g1 = (int)image.pixels.at(i).green + g1; 
+        g1 = (int)image.pixels.at(i).green + g1;
         r1 = (int)image.pixels.at(i).red + r1; 
 
         Clamp(b1, g1, r1); 
@@ -198,7 +199,7 @@ void Image::scale(const Image& image, int b, int g, int r) {
     } 
 }
 
-void Image::seperateChannel(const Image& image, int b, int g, int r){
+void Image::separateChannel(const Image& image, int b, int g, int r){
     pixels.clear(); 
     if (b == 1) {
         for(int i = 0; i < image.pixels.size(); i++) {

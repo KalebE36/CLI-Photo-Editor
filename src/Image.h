@@ -43,7 +43,7 @@ public:
 
 
     Image();
-    void read(const string& in_name);
+    void read(const string& in_name, int& check_num);
     void write(const string& out_name); 
     void multiply(const Image& top_layer, const Image& bottom_layer);
     void subtract(const Image& top_layer, const Image& bottom_layer); 
@@ -51,7 +51,7 @@ public:
     void overlay(const Image& top_layer, const Image& bottom_layer);
     void add(const Image& image, int b, int g, int r);  
     void scale(const Image& image, int b, int g, int r); 
-    void seperateChannel(const Image& image, int b, int g, int r); 
+    void separateChannel(const Image& image, int b, int g, int r);
     void combChannel(const Image& blue_channel, const Image& green_channel, const Image& red_channel); 
     void flipImage(const Image& image1); 
 
