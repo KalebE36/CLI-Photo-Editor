@@ -10,20 +10,15 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-    int check_num = 0;
        
     int check = checkArgs(argc, argv);
 
     if (check == 1) {
         return 1;
     }
-
-    Image tracking_image;
-    tracking_image.read(argv[2], check_num);
-
-
-    tracking_image.write(argv[1]);
-
+    /*
+    implementArgs(argc, argv);
+    */
 
     return 0;
 

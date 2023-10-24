@@ -31,7 +31,6 @@ Image::Image() {}
 void Image::read(const string& in_name, int& check_num) {
 
     ifstream stream(in_name, ios_base::binary);
-
     if (!stream.is_open()) {
         cout << "File does not exist." << endl;
         check_num = 1;
@@ -69,15 +68,13 @@ void Image::read(const string& in_name, int& check_num) {
 }
 
 
-void Image::multiply(const Image& top_layer, const Image& bottom_layer) {
-    for (int i = 0; i < top_layer.pixels.size(); i++) {
-        Pixel new_pixel; 
+void Image::multiply(const Image& bottom_layer) {
 
-        new_pixel.blue = (char)((((float)top_layer.pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
-        new_pixel.green = (char)((((float)top_layer.pixels.at(i).green * (float)bottom_layer.pixels.at(i).green) / 255) + 0.5f);
-        new_pixel.red = (char)((((float)top_layer.pixels.at(i).red * (float)bottom_layer.pixels.at(i).red) / 255) + 0.5f);
-        
-        pixels.push_back(new_pixel); 
+    for (int i = 0; i < pixels.size(); i++) {
+        pixels.at(i).blue = (char)((((float)pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
+        pixels.at(i).green = (char)((((float)pixels.at(i).green * (float)bottom_layer.pixels.at(i).green) / 255) + 0.5f);
+        pixels.at(i).red = (char)((((float)pixels.at(i).red * (float)bottom_layer.pixels.at(i).red) / 255) + 0.5f);
+
 
     }
 

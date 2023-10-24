@@ -45,7 +45,7 @@ public:
     Image();
     void read(const string& in_name, int& check_num);
     void write(const string& out_name); 
-    void multiply(const Image& top_layer, const Image& bottom_layer);
+    void multiply(const Image& bottom_layer);
     void subtract(const Image& top_layer, const Image& bottom_layer); 
     void screen(const Image& top_layer, const Image& bottom_layer); 
     void overlay(const Image& top_layer, const Image& bottom_layer);
