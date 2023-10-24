@@ -69,86 +69,74 @@ void Image::read(const string& in_name, int& check_num) {
 
 
 void Image::multiply(const Image& bottom_layer) {
-
     for (int i = 0; i < pixels.size(); i++) {
+
         pixels.at(i).blue = (char)((((float)pixels.at(i).blue * (float)bottom_layer.pixels.at(i).blue)/255) + 0.5f);
         pixels.at(i).green = (char)((((float)pixels.at(i).green * (float)bottom_layer.pixels.at(i).green) / 255) + 0.5f);
         pixels.at(i).red = (char)((((float)pixels.at(i).red * (float)bottom_layer.pixels.at(i).red) / 255) + 0.5f);
 
-
     }
 
 }
 
-void Image::subtract(const Image& top_layer, const Image& bottom_layer){
+void Image::subtract(const Image& bottom_layer){
 
     int blue, green, red;
-    for(int i = 0; i < top_layer.pixels.size(); i++){
-        Pixel new_pixel; 
+    for(int i = 0; i < pixels.size(); i++){
 
-        blue = (int)top_layer.pixels.at(i).blue - (int)bottom_layer.pixels.at(i).blue; 
-        green = (int)top_layer.pixels.at(i).green - (int)bottom_layer.pixels.at(i).green; 
-        red = (int)top_layer.pixels.at(i).red - (int)bottom_layer.pixels.at(i).red; 
+        blue = (int)pixels.at(i).blue - (int)bottom_layer.pixels.at(i).blue;
+        green = (int)pixels.at(i).green - (int)bottom_layer.pixels.at(i).green;
+        red = (int)pixels.at(i).red - (int)bottom_layer.pixels.at(i).red;
 
         Clamp(blue, green, red); 
 
-        new_pixel.blue = (char)blue; 
-        new_pixel.green = (char)green;
-        new_pixel.red = (char)red; 
-
-        pixels.push_back(new_pixel); 
+        pixels.at(i).blue = (char)blue;
+        pixels.at(i).green = (char)green;
+        pixels.at(i).red = (char)red;
 
     }
 }
 
 
-void Image::screen(const Image& top_layer, const Image& bottom_layer) {
+void Image::screen(const Image& bottom_layer) {
 
-    for (unsigned int i = 0; i < top_layer.pixels.size(); i++) {
-        Pixel new_pixel; 
+    for (unsigned int i = 0; i < pixels.size(); i++) {
         
-        new_pixel.blue = (char)(((1 - ((1 - top_layer.pixels.at(i).blue / 255.0)*(1 - bottom_layer.pixels.at(i).blue / 255.0)))*255.0) + 0.5f);
-        new_pixel.green = (char)(((1 - ((1 - top_layer.pixels.at(i).green / 255.0)*(1 - bottom_layer.pixels.at(i).green / 255.0)))*255.0) + 0.5f);
-        new_pixel.red = (char)(((1 - ((1 - top_layer.pixels.at(i).red / 255.0)*(1 - bottom_layer.pixels.at(i).red / 255.0)))*255.0) + 0.5f);
+        pixels.at(i).blue = (char)(((1 - ((1 - pixels.at(i).blue / 255.0)*(1 - bottom_layer.pixels.at(i).blue / 255.0)))*255.0) + 0.5f);
+        pixels.at(i).green = (char)(((1 - ((1 - pixels.at(i).green / 255.0)*(1 - bottom_layer.pixels.at(i).green / 255.0)))*255.0) + 0.5f);
+        pixels.at(i).red = (char)(((1 - ((1 - pixels.at(i).red / 255.0)*(1 - bottom_layer.pixels.at(i).red / 255.0)))*255.0) + 0.5f);
 
-
-        pixels.push_back(new_pixel);
         
     } 
 
 }
 
 
-void Image::overlay(const Image& top_layer, const Image& bottom_layer) {
+void Image::overlay(const Image& bottom_layer) {
 
-    for(int i = 0; i <  top_layer.pixels.size(); i++) {
+    for(int i = 0; i <  pixels.size(); i++) {
 
-        Pixel new_pixel; 
 
         if((((float)bottom_layer.pixels.at(i).blue )/ 255) > 0.5) {
-            new_pixel.blue = (((1 - (2 * (1 - top_layer.pixels.at(i).blue / 255.0) * (1 - bottom_layer.pixels.at(i).blue / 255.0))) * 255.0) + 0.5f);
+            pixels.at(i).blue = (((1 - (2 * (1 - pixels.at(i).blue / 255.0) * (1 - bottom_layer.pixels.at(i).blue / 255.0))) * 255.0) + 0.5f);
         } else  {
-            new_pixel.blue = (int)(((2 * (top_layer.pixels.at(i).blue / 255.0) * (bottom_layer.pixels.at(i).blue / 255.0)) * 255.0) + 0.5f);
+            pixels.at(i).blue = (int)(((2 * (pixels.at(i).blue / 255.0) * (bottom_layer.pixels.at(i).blue / 255.0)) * 255.0) + 0.5f);
         }
 
         if((((float)bottom_layer.pixels.at(i).green ) / 255) > 0.5) {
-            new_pixel.green = (int)(((1 - (2 * (1 - top_layer.pixels.at(i).green / 255.0) * (1 - bottom_layer.pixels.at(i).green / 255.0))) * 255.0) + 0.5f);    
+            pixels.at(i).green = (int)(((1 - (2 * (1 - pixels.at(i).green / 255.0) * (1 - bottom_layer.pixels.at(i).green / 255.0))) * 255.0) + 0.5f);
 
         } else {
-            new_pixel.green = (int)(((2 * (top_layer.pixels.at(i).green / 255.0) * (bottom_layer.pixels.at(i).green / 255.0)) * 255.0) + 0.5f);
-
+            pixels.at(i).green = (int)(((2 * (pixels.at(i).green / 255.0) * (bottom_layer.pixels.at(i).green / 255.0)) * 255.0) + 0.5f);
         }
 
         if((((float)bottom_layer.pixels.at(i).red) / 255) > 0.5) {
-            new_pixel.red = (int)(((1 - (2 * (1 - top_layer.pixels.at(i).red / 255.0) * (1 - bottom_layer.pixels.at(i).red / 255.0))) * 255.0) + 0.5f);    
+            pixels.at(i).red = (int)(((1 - (2 * (1 - pixels.at(i).red / 255.0) * (1 - bottom_layer.pixels.at(i).red / 255.0))) * 255.0) + 0.5f);
 
         } else {
-            new_pixel.red = (int)(((2 * (top_layer.pixels.at(i).red / 255.0) * (bottom_layer.pixels.at(i).red / 255.0)) * 255.0) + 0.5f);
+            pixels.at(i).red = (int)(((2 * (pixels.at(i).red / 255.0) * (bottom_layer.pixels.at(i).red / 255.0)) * 255.0) + 0.5f);
 
         }
-
-        pixels.push_back(new_pixel);
-
 
     }
 }
@@ -239,18 +227,11 @@ void Image::separateChannel(const Image& image, int b, int g, int r){
 
 }
 
-void Image::combChannel(const Image& blue_channel, const Image& green_channel, const Image& red_channel) {
-    for (int i = 0; i < blue_channel.pixels.size(); i++) {
-        Pixel new_pixel; 
+void Image::combChannel(const Image& blue_channel, const Image& green_channel) {
+    for (int i = 0; i < pixels.size(); i++) {
 
-        new_pixel.blue = blue_channel.pixels.at(i).blue;
-        new_pixel.green = green_channel.pixels.at(i).green;
-        new_pixel.red = red_channel.pixels.at(i).red;
-
-        pixels.push_back(new_pixel); 
-
-
-
+        pixels.at(i).blue = blue_channel.pixels.at(i).blue;
+        pixels.at(i).green = green_channel.pixels.at(i).green;
         
     }
 }

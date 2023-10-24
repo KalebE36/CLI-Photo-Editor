@@ -7,6 +7,17 @@
 #include "Image.h"
 
 
+int checkTGA(string& test_string) {
+
+    if (test_string.find(".tga") == -1) {
+        cout << "Invalid file name." << endl;
+        return 1;
+    }
+
+    return 0;
+}
+
+
 int checkInt(int& index, int& argc, char**& argv) {
     if (argc <= (index+1)) {
         cout << "Missing argument." << endl;
@@ -25,24 +36,27 @@ int checkInt(int& index, int& argc, char**& argv) {
 
 
 
-
-
-
 int checkCombine(int& index, int& argc, char**& argv) {
     if (argc <= (index+2)) {
         cout << "Missing argument." << endl;
         return 1;
     }
 
-    if((strcmp(argv[index + 1], "input") == 0) || (strcmp(argv[index + 1], "output") == 0) || (strcmp(argv[index + 1], "src") == 0) || (strcmp(argv[index + 1], "input/") == 0) || (strcmp(argv[index + 1], "output/") == 0) || (strcmp(argv[index + 1], "src/") == 0)){
-        cout << "Invalid file name" << endl;
+    string test_string = (string)argv[index+1];
+    string test_string2 = (string)argv[index+2];
+
+
+    if (test_string.find(".tga") == -1) {
+        cout << "Invalid file name." << endl;
         return 1;
     }
 
-    if((strcmp(argv[index + 2], "input") == 0) || (strcmp(argv[index + 2], "output") == 0) || (strcmp(argv[index + 2], "src") == 0) || (strcmp(argv[index + 2], "input/") == 0) || (strcmp(argv[index + 2], "output/") == 0) || (strcmp(argv[index + 2], "src/") == 0)){
-        cout << "Invalid file name" << endl;
+    if (test_string2.find(".tga") == -1) {
+        cout << "Invalid file name." << endl;
         return 1;
     }
+
+
     int check_num = 0;
     Image test_image1;
     Image test_image2;
@@ -64,12 +78,12 @@ int checkOneArg(int& index, int& argc, char**& argv) {
         return 1;
     }
 
-    if((strcmp(argv[index + 1], "input") == 0) || (strcmp(argv[index + 1], "output") == 0) || (strcmp(argv[index + 1], "src") == 0) || (strcmp(argv[index + 1], "input/") == 0) || (strcmp(argv[index + 1], "output/") == 0) || (strcmp(argv[index + 1], "src/") == 0)){
-        cout << "Invalid file name" << endl;
+    string test_string = argv[index+1];
+    int test_num = checkTGA(test_string);
+    if(test_num == 1) {
         return 1;
     }
 
-    int test_num = 0;
     Image test_image;
     test_image.read(argv[index+1], test_num);
     return test_num;
@@ -123,12 +137,23 @@ int checkArgs(int& argc, char**&argv) {
                 int num = checkOneArg(i, argc, argv);
                 if (num == 1) {
                     return 1;
+                }
+                string test_string = argv[i+1];
+                int test_num = checkTGA(test_string);
+                if(test_num == 1) {
+                    return 1;
                 } else {
                     i++;
                 }
+
             } else if (strcmp(argv[i], "subtract") == 0) {
                 int num = checkOneArg(i, argc, argv);
                 if (num == 1) {
+                    return 1;
+                }
+                string test_string = argv[i+1];
+                int test_num = checkTGA(test_string);
+                if(test_num == 1) {
                     return 1;
                 } else {
                     i++;
@@ -138,6 +163,11 @@ int checkArgs(int& argc, char**&argv) {
                 if (num == 1) {
                     return 1;
 
+                }
+                string test_string = argv[i+1];
+                int test_num = checkTGA(test_string);
+                if(test_num == 1) {
+                    return 1;
                 } else {
                     i++;
                 }
@@ -146,6 +176,11 @@ int checkArgs(int& argc, char**&argv) {
                 if (num == 1) {
                     return 1;
 
+                }
+                string test_string = argv[i+1];
+                int test_num = checkTGA(test_string);
+                if(test_num == 1) {
+                    return 1;
                 } else {
                     i++;
                 }
