@@ -43,18 +43,42 @@ void implementArgs(Image& tracking_image, int& argc, char**& argv, int& check_nu
             i++;
 
         } else if (strcmp(argv[i], "flip") == 0) {
+            tracking_image.flipImage();
 
-        } else if((strcmp(argv[i], "onlyred") == 0) || (strcmp(argv[i], "onlygreen") == 0) || (strcmp(argv[i], "onlyblue") == 0)) {
+        } else if (strcmp(argv[i], "onlyred") == 0) {
+            tracking_image.onlyRed();
+        } else if (strcmp(argv[i], "onlygreen") == 0) {
+            tracking_image.onlyGreen();
+        } else if(strcmp(argv[i], "onlyblue") == 0) {
+            tracking_image.onlyBlue();
+        } else if (strcmp(argv[i], "scalered") == 0){
+            int scale_num = stoi(argv[i+1]);
+            tracking_image.scaleRed(scale_num);
+            i++;
+        }  else if (strcmp(argv[i], "scalegreen") == 0) {
+            int scale_num = stoi(argv[i+1]);
+            tracking_image.scaleGreen(scale_num);
+            i++;
+        } else if (strcmp(argv[i], "scaleblue") == 0) {
+            int scale_num = stoi(argv[i+1]);
+            tracking_image.scaleBlue(scale_num);
+            i++;
 
-        } else if ((strcmp(argv[i], "addred") == 0) || (strcmp(argv[i], "addgreen") == 0) || (strcmp(argv[i], "addblue") == 0)) {
+        } else if(strcmp(argv[i], "addred") == 0){
+            int add_num = stoi(argv[i+1]);
+            tracking_image.addRed(add_num);
+            i++;
 
+        } else if(strcmp(argv[i], "addgreen") == 0){
+            int add_num = stoi(argv[i+1]);
+            tracking_image.addGreen(add_num);
+            i++;
 
-        } else if ((strcmp(argv[i], "scalered") == 0) || (strcmp(argv[i], "scalegreen") == 0) || (strcmp(argv[i], "scaleblue") == 0)){
-
-        }  else {
-
+        } else if(strcmp(argv[i], "addblue") == 0) {
+            int add_num = stoi(argv[i + 1]);
+            tracking_image.addBlue(add_num);
+            i++;
         }
-
     }
 
     tracking_image.write(argv[1]);

@@ -49,11 +49,17 @@ public:
     void subtract(const Image& bottom_layer);
     void screen(const Image& bottom_layer);
     void overlay(const Image& bottom_layer);
-    void add(const Image& image, int b, int g, int r);  
-    void scale(const Image& image, int b, int g, int r); 
-    void separateChannel(const Image& image, int b, int g, int r);
+    void addRed(int& add_num);
+    void addBlue(int& add_num);
+    void addGreen(int& add_num);
+    void scaleRed(int& scale_num);
+    void scaleGreen(int& scale_num);
+    void scaleBlue(int& scale_num);
+    void onlyRed();
+    void onlyGreen();
+    void onlyBlue();
     void combChannel(const Image& blue_channel, const Image& green_channel);
-    void flipImage(const Image& image1); 
+    void flipImage();
 
 
 };

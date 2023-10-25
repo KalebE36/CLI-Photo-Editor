@@ -32,7 +32,6 @@ void Image::read(const string& in_name, int& check_num) {
 
     ifstream stream(in_name, ios_base::binary);
     if (!stream.is_open()) {
-        cout << "File does not exist." << endl;
         check_num = 1;
     }
 
@@ -141,90 +140,125 @@ void Image::overlay(const Image& bottom_layer) {
     }
 }
 
-void Image::add(const Image& image, int b, int g, int r) {
-    for(int i = 0; i < image.pixels.size(); i++) {
-        int b1 = b;
-        int g1 = g;
-        int r1 = r;
-        Pixel new_pixel; 
 
-        b1 = (int)image.pixels.at(i).blue + b1; 
-        g1 = (int)image.pixels.at(i).green + g1;
-        r1 = (int)image.pixels.at(i).red + r1; 
+void Image::addRed(int& add_num) {
+    for(int i = 0; i < pixels.size(); i++) {
+        int b1 = 1;
+        int g1 = 1;
+        int r1 = add_num;
 
-        Clamp(b1, g1, r1); 
+        r1 = (int)pixels.at(i).red + r1;
+        Clamp(b1, g1, r1);
 
-        new_pixel.blue = b1; 
-        new_pixel.green = g1; 
-        new_pixel.red = r1; 
+        pixels.at(i).red = r1;
 
-        pixels.push_back(new_pixel);
-    } 
+    }
 }
 
-void Image::scale(const Image& image, int b, int g, int r) {
-    for(int i = 0; i < image.pixels.size(); i++) {
-        Pixel new_pixel; 
-        int b1 = b;
-        int g1 = g;
-        int r1 = r;
+void Image::addBlue(int& add_num) {
+    for(int i = 0; i < pixels.size(); i++) {
+        int b1 = add_num;
+        int g1 = 1;
+        int r1 = 1;
 
-        b1 = (int)image.pixels.at(i).blue * b1;
-        g1 = (int)image.pixels.at(i).green * g1; 
-        r1 = (int)image.pixels.at(i).red * r1; 
+        b1 = (int)pixels.at(i).blue + b1;
+        Clamp(b1, g1, r1);
 
-        Clamp(b1, g1, r1); 
+        pixels.at(i).blue = b1;
 
-        new_pixel.blue = b1; 
-        new_pixel.green = g1; 
-        new_pixel.red = r1; 
-
-        pixels.push_back(new_pixel); 
-        
-    } 
+    }
 }
 
-void Image::separateChannel(const Image& image, int b, int g, int r){
-    pixels.clear(); 
-    if (b == 1) {
-        for(int i = 0; i < image.pixels.size(); i++) {
-            Pixel new_pixel; 
+void Image::addGreen(int& add_num) {
+    for(int i = 0; i < pixels.size(); i++) {
+        int b1 = 1;
+        int g1 = add_num;
+        int r1 = 1;
 
-            new_pixel.blue = image.pixels.at(i).blue; 
-            new_pixel.green = image.pixels.at(i).blue; 
-            new_pixel.red = image.pixels.at(i).blue; 
+        g1 = (int)pixels.at(i).green + g1;
+        Clamp(b1, g1, r1);
 
-            pixels.push_back(new_pixel);
+        pixels.at(i).green = g1;
 
-        }  
     }
+}
 
-    if (g == 1){
-        for(int i = 0; i < image.pixels.size(); i++) {
-            Pixel new_pixel; 
 
-            new_pixel.blue = image.pixels.at(i).green; 
-            new_pixel.green = image.pixels.at(i).green; 
-            new_pixel.red = image.pixels.at(i).green; 
+void Image::scaleRed(int& scale_num) {
+    for(int i = 0; i < pixels.size(); i++) {
+        int b1 = 1;
+        int g1 = 1;
+        int r1 = scale_num;
 
-            pixels.push_back(new_pixel);
 
-        }  
+        r1 = (int)pixels.at(i).red * r1;
+        Clamp(b1, g1, r1);
+
+        pixels.at(i).red = r1;
+
     }
+}
 
-    if (r == 1){
-        for(int i = 0; i < image.pixels.size(); i++) {
-            Pixel new_pixel; 
+void Image::scaleGreen(int& scale_num) {
+    for(int i = 0; i < pixels.size(); i++) {
+        int b1 = 1;
+        int g1 = scale_num;
+        int r1 = 1;
 
-            new_pixel.blue = image.pixels.at(i).red; 
-            new_pixel.green = image.pixels.at(i).red; 
-            new_pixel.red = image.pixels.at(i).red; 
+        g1 = (int)pixels.at(i).green * g1;
+        Clamp(b1, g1, r1);
 
-            pixels.push_back(new_pixel);
+        pixels.at(i).green = g1;
 
-        }  
     }
+}
 
+void Image::scaleBlue(int& scale_num) {
+    for(int i = 0; i < pixels.size(); i++) {
+        int b1 = scale_num;
+        int g1 = 1;
+        int r1 = 1;
+
+        b1 = (int)pixels.at(i).blue * b1;
+        Clamp(b1, g1, r1);
+
+        pixels.at(i).blue = b1;
+
+    }
+}
+
+
+
+
+
+void Image::onlyRed() {
+    for(int i = 0; i < pixels.size(); i++) {
+
+        pixels.at(i).blue = pixels.at(i).red;
+        pixels.at(i).green = pixels.at(i).red;
+
+
+    }
+}
+
+void Image::onlyGreen() {
+    for(int i = 0; i < pixels.size(); i++) {
+
+        pixels.at(i).blue = pixels.at(i).green;
+        pixels.at(i).red = pixels.at(i).green;
+
+
+    }
+}
+
+void Image::onlyBlue() {
+    for(int i = 0; i < pixels.size(); i++) {
+
+        pixels.at(i).red = pixels.at(i).blue;
+        pixels.at(i).green = pixels.at(i).blue;
+
+
+    }
 }
 
 void Image::combChannel(const Image& blue_channel, const Image& green_channel) {
@@ -236,20 +270,20 @@ void Image::combChannel(const Image& blue_channel, const Image& green_channel) {
     }
 }
 
-void Image::flipImage(const Image& image1) {
-    for (int i = image1.pixels.size()-1; i >= 0; i--) {
-        Pixel new_pixel; 
+void Image::flipImage() {
+    Image temp_image;
+    temp_image.header = header;
+    for (int i = pixels.size()-1; i >= 0; i--) {
+        Pixel new_pixel;
+        new_pixel.blue = pixels.at(i).blue;
+        new_pixel.green = pixels.at(i).green;
+        new_pixel.red = pixels.at(i).red;
 
-        new_pixel.blue = image1.pixels.at(i).blue;
-        new_pixel.green = image1.pixels.at(i).green;
-        new_pixel.red = image1.pixels.at(i).red;
-
-
-
-        pixels.push_back(new_pixel); 
-
+        temp_image.pixels.push_back(new_pixel);
 
     }
+    pixels.clear();
+    pixels = temp_image.pixels;
 
 
 }

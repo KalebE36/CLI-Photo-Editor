@@ -10,7 +10,7 @@
 int checkTGA(string& test_string) {
 
     if (test_string.find(".tga") == -1) {
-        cout << "Invalid file name." << endl;
+        cout << "Invalid argument, invalid file name." << endl;
         return 1;
     }
 
@@ -27,7 +27,7 @@ int checkInt(int& index, int& argc, char**& argv) {
     try {
         int num = stoi(test_string);
     } catch(...) {
-        cout << "Invalid integer" << endl;
+        cout << "Invalid argument, expected number." << endl;
         return 1;
     }
 
@@ -47,12 +47,12 @@ int checkCombine(int& index, int& argc, char**& argv) {
 
 
     if (test_string.find(".tga") == -1) {
-        cout << "Invalid file name." << endl;
+        cout << "Invalid argument, invalid file name." << endl;
         return 1;
     }
 
     if (test_string2.find(".tga") == -1) {
-        cout << "Invalid file name." << endl;
+        cout << "Invalid argument, invalid file name." << endl;
         return 1;
     }
 
@@ -63,10 +63,14 @@ int checkCombine(int& index, int& argc, char**& argv) {
 
     test_image1.read(argv[index+1], check_num);
     if (check_num == 1){
+        cout << "Invalid argument, file does not exist." << endl;
         return 1;
     }
 
     test_image2.read(argv[index+2], check_num);
+    if (check_num == 1) {
+        cout << "Invalid argument, file does not exist." << endl;
+    }
     return check_num;
 
 }
@@ -86,6 +90,10 @@ int checkOneArg(int& index, int& argc, char**& argv) {
 
     Image test_image;
     test_image.read(argv[index+1], test_num);
+    if (test_num == 1) {
+        cout << "Invalid argument, file does not exist." << endl;
+        return 1;
+    }
     return test_num;
 
 }
@@ -94,17 +102,20 @@ int checkOneArg(int& index, int& argc, char**& argv) {
 int checkArgs(int& argc, char**&argv) {
     if ((argc == 1) || (strcmp(argv[1], "--help") == 0)) {
         cout << "Project 2: Image Processing, Fall 2023" << endl << endl;
-        cout << "Usage" << endl;
-        cout << "\t ./project2.out [output] [firstimage] [method] [...]" << endl << endl;
+        cout << "Usage:" << endl;
+        cout << "\t./project2.out [output] [firstImage] [method] [...]" << endl << endl;
 
-        return 1;
+        return 2;
 
     }
 
-    if ((strcmp(argv[1], "output/output.tga") != 0) || (argc <= 2)) {
-        cout << "Invalid file name." << endl;
+    if(argc > 1) {
+        string test_string = (string)argv[1];
+        if(test_string.find(".tga") == -1) {
+            cout << "Invalid file name." << endl;
 
-        return 1;
+            return 1;
+        }
     }
 
     if (argc >= 3) {
@@ -120,6 +131,7 @@ int checkArgs(int& argc, char**&argv) {
         int check_num = 0;
         test_image.read(test_string, check_num);
         if(check_num == 1){
+            cout << "File does not exist." << endl;
             return 1;
         }
     }
@@ -213,7 +225,7 @@ int checkArgs(int& argc, char**&argv) {
                     i++;
                 }
             }  else {
-                cout << "Invalid method." << endl;
+                cout << "Invalid method name." << endl;
                 return 1;
             }
 

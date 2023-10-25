@@ -14,9 +14,14 @@ int main(int argc, char** argv) {
        
     int check = checkArgs(argc, argv);
 
+    if(check == 2) {
+        return 0;
+    }
+
     if (check == 1) {
         return 1;
     }
+
 
     Image tracking_image;
     tracking_image.read(argv[2], check);
