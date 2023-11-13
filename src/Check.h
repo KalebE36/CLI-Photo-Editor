@@ -14,6 +14,11 @@ int checkTGA(string& test_string) {
         return 1;
     }
 
+    if (test_string.length() <= 4) {
+        cout << "Invalid file name." << endl;
+        return 1;
+    }
+
     return 0;
 }
 
@@ -45,9 +50,20 @@ int checkCombine(int& index, int& argc, char**& argv) {
     string test_string = (string)argv[index+1];
     string test_string2 = (string)argv[index+2];
 
+    if(test_string.length() <= 4) {
+        cout << "Invalid file name." << endl;
+
+        return 1;
+    }
 
     if (test_string.find(".tga") == -1) {
         cout << "Invalid argument, invalid file name." << endl;
+        return 1;
+    }
+
+    if(test_string2.length() <= 4) {
+        cout << "Invalid file name." << endl;
+
         return 1;
     }
 
@@ -116,6 +132,13 @@ int checkArgs(int& argc, char**&argv) {
 
             return 1;
         }
+
+        if(test_string.length() <= 4) {
+            cout << "Invalid file name." << endl;
+
+            return 1;
+        }
+
     }
 
     if (argc >= 3) {
@@ -125,6 +148,12 @@ int checkArgs(int& argc, char**&argv) {
 
         if (test_string.find(".tga") == -1) {
             cout << "Invalid file name." << endl;
+            return 1;
+        }
+
+        if(test_string.length() <= 4) {
+            cout << "Invalid file name." << endl;
+
             return 1;
         }
 
